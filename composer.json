@@ -1,0 +1,40 @@
+{
+    "name": "hongfs\/flysystem-cos",
+    "description": "COS for Filesystem",
+    "keywords": [
+        "flysystem",
+        "laravel",
+        "cos"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "hongfs",
+            "email": "hong@hongfs.cn"
+        }
+    ],
+    "require": {
+        "league/flysystem": "^1.0",
+        "qcloud/cos-sdk-v5": "^1.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Hongfs\\Cos\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Hongfs\\Cos\\CosServiceProvider"
+            ]
+        }
+    }
+}
