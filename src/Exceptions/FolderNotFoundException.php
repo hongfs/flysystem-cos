@@ -22,7 +22,7 @@ class FolderNotFoundException extends Exception
     {
         $this->path = $path;
 
-        parent::__construct('Folder does not found: ' . $this->getPath(), $code, $previous);
+        parent::__construct('Folder does not found: '.$this->getPath(), $code, $previous);
     }
 
     /**
