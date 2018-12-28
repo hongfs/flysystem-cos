@@ -667,12 +667,12 @@ class CosAdapter extends AbstractAdapter
      */
     public function getVisibility($path)
     {
-        $visibility =   $this->acl == self::VISIBILITY_PRIVATE
+        $visibility = $this->acl == self::VISIBILITY_PRIVATE
                             ? self::VISIBILITY_PRIVATE
                             : self::VISIBILITY_PUBLIC;
 
         return [
-            'visibility' => $visibility
+            'visibility' => $visibility,
         ];
 
         try {
