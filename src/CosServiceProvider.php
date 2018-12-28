@@ -1,14 +1,14 @@
 <?php
+
 namespace Hongfs\Cos;
 
-use Hongfs\Cos\CosAdapter;
-use Hongfs\Cos\Plugin\GetUrlPlugin;
-use Hongfs\Cos\Plugin\GetTemporaryUrlPlugin;
-use Hongfs\Cos\Plugin\FolderHasPlugin;
 use Hongfs\Cos\Plugin\FolderCopyPlugin;
+use Hongfs\Cos\Plugin\FolderHasPlugin;
 use Hongfs\Cos\Plugin\FolderRenamePlugin;
-use League\Flysystem\Filesystem;
+use Hongfs\Cos\Plugin\GetTemporaryUrlPlugin;
+use Hongfs\Cos\Plugin\GetUrlPlugin;
 use Illuminate\Support\ServiceProvider;
+use League\Flysystem\Filesystem;
 
 class CosServiceProvider extends ServiceProvider
 {
@@ -19,11 +19,12 @@ class CosServiceProvider extends ServiceProvider
     {
         \Storage::extend('cos', function ($app, $config) {
             $filesystem = new Filesystem(new CosAdapter($config), $config);
-            $filesystem->addPlugin(new GetUrlPlugin);
-            $filesystem->addPlugin(new GetTemporaryUrlPlugin);
-            $filesystem->addPlugin(new FolderHasPlugin);
-            $filesystem->addPlugin(new FolderCopyPlugin);
-            $filesystem->addPlugin(new FolderRenamePlugin);
+            $filesystem->addPlugin(new GetUrlPlugin());
+            $filesystem->addPlugin(new GetTemporaryUrlPlugin());
+            $filesystem->addPlugin(new FolderHasPlugin());
+            $filesystem->addPlugin(new FolderCopyPlugin());
+            $filesystem->addPlugin(new FolderRenamePlugin());
+
             return $filesystem;
         });
     }

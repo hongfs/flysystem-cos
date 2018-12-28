@@ -22,7 +22,7 @@ class FolderExistsException extends Exception
     {
         $this->path = $path;
 
-        parent::__construct('Folder already exists: ' . $this->getPath(), $code, $previous);
+        parent::__construct('Folder already exists: '.$this->getPath(), $code, $previous);
     }
 
     /**
