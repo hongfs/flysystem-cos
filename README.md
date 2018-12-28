@@ -8,6 +8,8 @@ $ composer require hongfs/flysystem-cos
 
 ## 使用
 
+> 由于COS ACL策略有1000条限制，暂时取消getVisibility, setVisibility设置
+
 ```php
 use Hongfs\Cos\CosAdapter;
 use League\Flysystem\Filesystem;
@@ -56,9 +58,9 @@ int $flysystem->getTimestamp('1.txt');
 
 array $flysystem->listContents();
 
-string $flysystem->setVisibility('1.txt', 'public');
+// string $flysystem->setVisibility('1.txt', 'public');
 
-string $flysystem->getVisibility('1.txt');
+// string $flysystem->getVisibility('1.txt');
 ```
 
 ## 扩展

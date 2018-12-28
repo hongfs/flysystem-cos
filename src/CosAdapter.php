@@ -586,7 +586,7 @@ class CosAdapter extends AbstractAdapter
     }
 
     /**
-     * 设置文件可见性
+     * 设置文件可见性(暂不可用)
      *
      * @param  string  $path
      * @param  string  $visibility
@@ -594,6 +594,8 @@ class CosAdapter extends AbstractAdapter
      */
     public function setVisibility($path, $visibility)
     {
+        return true;
+
         try {
             $result = $this->cos->PutObjectAcl([
                 'Bucket'    => $this->bucket,
@@ -609,13 +611,17 @@ class CosAdapter extends AbstractAdapter
     }
 
     /**
-     * 获取文件可见性(慎用)
+     * 获取文件可见性(暂不可用)
      * 
      * @param  string  $path
      * @return array|bool
      */
     public function getVisibility($path)
     {
+        return $this->acl == self::VISIBILITY_PRIVATE
+                ? self::VISIBILITY_PRIVATE
+                : self::VISIBILITY_PUBLIC;
+
         try {
             $result = $this->cos->getObjectAcl([
                 'Bucket'    => $this->bucket,

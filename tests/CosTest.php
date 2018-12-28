@@ -192,16 +192,16 @@ class CosTest extends TestCase
         $this->filesystem->delete($filename);
     }
 
-    public function testVisibility()
-    {
-        $contents = 'Test';
-        $filename = '1.txt';
-        $visibility = AdapterInterface::VISIBILITY_PUBLIC;
-        $this->filesystem->write($filename, $contents);
-        $this->assertTrue($this->filesystem->setVisibility($filename, $visibility));
-        $this->assertEquals($visibility, $this->filesystem->getVisibility($filename));
-        $this->filesystem->delete($filename);
-    }
+    // public function testVisibility()
+    // {
+    //     $contents = 'Test';
+    //     $filename = '1.txt';
+    //     $visibility = AdapterInterface::VISIBILITY_PUBLIC;
+    //     $this->filesystem->write($filename, $contents);
+    //     $this->assertTrue($this->filesystem->setVisibility($filename, $visibility));
+    //     $this->assertEquals($visibility, $this->filesystem->getVisibility($filename));
+    //     $this->filesystem->delete($filename);
+    // }
 
     public function testCreateDir()
     {
