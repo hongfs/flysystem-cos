@@ -1,9 +1,10 @@
 <?php
+
 namespace Hongfs\Cos\Plugin;
 
-use League\Flysystem\Util;
 use League\Flysystem\FilesystemInterface;
 use League\Flysystem\PluginInterface;
+use League\Flysystem\Util;
 
 class FolderRenamePlugin implements PluginInterface
 {
