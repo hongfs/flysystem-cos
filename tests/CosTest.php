@@ -3,9 +3,6 @@
 namespace Hongfs\Cos\Tests;
 
 use Hongfs\Cos\CosAdapter;
-use Hongfs\Cos\Plugin\FolderCopyPlugin;
-use Hongfs\Cos\Plugin\FolderHasPlugin;
-use Hongfs\Cos\Plugin\FolderRenamePlugin;
 use Hongfs\Cos\Plugin\GetTemporaryUrlPlugin;
 use Hongfs\Cos\Plugin\GetUrlPlugin;
 use League\Flysystem\AdapterInterface;
@@ -31,9 +28,6 @@ class CosTest extends TestCase
         $this->filesystem = new Filesystem($this->driver);
         $this->filesystem->addPlugin(new GetUrlPlugin());
         $this->filesystem->addPlugin(new GetTemporaryUrlPlugin());
-        $this->filesystem->addPlugin(new FolderHasPlugin());
-        $this->filesystem->addPlugin(new FolderCopyPlugin());
-        $this->filesystem->addPlugin(new FolderRenamePlugin());
     }
 
     public function testDown()
@@ -141,21 +135,6 @@ class CosTest extends TestCase
         $this->filesystem->delete($to);
     }
 
-    public function testFolderCopy()
-    {
-        $contents = 'Test';
-        $formDir = 'Test/';
-        $toDir = 'To/';
-        $form = '1.txt';
-        $this->filesystem->createDir($formDir);
-        $this->filesystem->write($formDir.$form, $contents);
-        $this->assertTrue($this->filesystem->folderCopy($formDir, $toDir));
-        $this->assertTrue($this->filesystem->folderHas($toDir));
-        $this->assertEquals($contents, $this->filesystem->read($toDir.$form));
-        $this->filesystem->deleteDir($formDir);
-        $this->filesystem->deleteDir($toDir);
-    }
-
     public function testRename()
     {
         $contents = 'Test';
@@ -166,21 +145,6 @@ class CosTest extends TestCase
         $this->assertTrue($this->filesystem->has($to));
         $this->assertFalse($this->filesystem->has($form));
         $this->filesystem->delete($to);
-    }
-
-    public function testFolderRename()
-    {
-        $contents = 'Test';
-        $formDir = 'Test/';
-        $toDir = 'To/';
-        $form = '1.txt';
-        $this->filesystem->createDir($formDir);
-        $this->filesystem->write($formDir.$form, $contents);
-        $this->assertTrue($this->filesystem->folderRename($formDir, $toDir));
-        $this->assertTrue($this->filesystem->folderHas($toDir));
-        $this->assertFalse($this->filesystem->folderHas($formDir));
-        $this->assertEquals($contents, $this->filesystem->read($toDir.$form));
-        $this->filesystem->deleteDir($toDir);
     }
 
     public function testGetListContents()

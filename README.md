@@ -3,7 +3,7 @@
 ## 安装
 
 ```shell
-$ composer require hongfs/flysystem-cos
+$ composer require hongfs/flysystem-cos:dev-master
 ```
 
 ## 使用
@@ -63,32 +63,6 @@ array $flysystem->listContents();
 // string $flysystem->getVisibility('1.txt');
 ```
 
-## 扩展
-
-```php
-use Hongfs\Cos\Plugin\GetUrlPlugin;
-use Hongfs\Cos\Plugin\GetTemporaryUrlPlugin;
-use Hongfs\Cos\Plugin\FolderHasPlugin;
-use Hongfs\Cos\Plugin\FolderCopyPlugin;
-use Hongfs\Cos\Plugin\FolderRenamePlugin;
-
-$filesystem->addPlugin(new GetUrlPlugin);
-$filesystem->addPlugin(new GetTemporaryUrlPlugin);
-$filesystem->addPlugin(new FolderHasPlugin);
-$filesystem->addPlugin(new FolderCopyPlugin);
-$filesystem->addPlugin(new FolderRenamePlugin);
-
-string $flysystem->getUrl('1.txt');
-
-string $flysystem->getTemporaryUrl('1.txt');
-
-bool $flysystem->folderHas('Test/');
-
-bool $flysystem->folderCopy('Test/', 'Test2/');
-
-bool $flysystem->folderRename('Test/', 'Test2/');
-```
-
 ## Laravel
 
 `config/filesystems.php`
@@ -114,7 +88,7 @@ $disk = Storage::disk('cos');
 
 $disk->get('1.txt');
 
-// https://laravel.com/docs/5.7/filesystem
+// https://laravel.com/docs/6.x/filesystem
 ```
 
 ## License

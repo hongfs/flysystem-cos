@@ -2,8 +2,6 @@
 
 namespace Hongfs\Cos;
 
-use Hongfs\Cos\Exceptions\FolderExistsException;
-use Hongfs\Cos\Exceptions\FolderNotFoundException;
 use League\Flysystem\Adapter\AbstractAdapter;
 use League\Flysystem\AdapterInterface;
 use League\Flysystem\Config;
@@ -303,29 +301,6 @@ class CosAdapter extends AbstractAdapter
     }
 
     /**
-     * 判断文件夹是否存在.
-     *
-     * @param string $dirname
-     *
-     * @return bool
-     */
-    public function folderHas($dirname)
-    {
-        try {
-            $result = $this->cos->listObjects([
-                'Bucket'    => $this->bucket,
-                'MaxKeys'   => 1,
-                'Prefix'    => $dirname.'/',
-            ]);
-
-            return isset($result['Contents']);
-        } catch (\Exception $e) {
-        }
-
-        return false;
-    }
-
-    /**
      * 重命名文件.
      *
      * @param string $from
@@ -336,19 +311,6 @@ class CosAdapter extends AbstractAdapter
     public function rename($from, $to)
     {
         return $this->copy($from, $to) && $this->delete($from);
-    }
-
-    /**
-     * 重命名文件夹.
-     *
-     * @param string $dirname
-     * @param string $newDirname
-     *
-     * @return bool
-     */
-    public function folderRename($dirname, $newDirname)
-    {
-        return $this->folderCopy($dirname, $newDirname) && $this->deleteDir($dirname);
     }
 
     /**
@@ -365,36 +327,12 @@ class CosAdapter extends AbstractAdapter
             $this->cos->Copy(
                 $this->bucket,
                 $to,
-                $this->getDefaultDomain().'/'.$from
+                [
+                    'Bucket'    => $this->bucket, 
+                    'Region'    => $this->region, 
+                    'Key'       => $from, 
+                ]
             );
-
-            return true;
-        } catch (\Exception $e) {
-        }
-
-        return false;
-    }
-
-    /**
-     * 复制文件夹.
-     *
-     * @param string $dirname
-     * @param string $newDirname
-     *
-     * @return bool
-     */
-    public function folderCopy($dirname, $newDirname)
-    {
-        $list = $this->listContents($dirname, true);
-
-        try {
-            $dirnameLen = strlen($dirname);
-
-            foreach ($list as $item) {
-                $path = substr($item['path'], $dirnameLen);
-
-                $this->copy($dirname.$path, $newDirname.$path);
-            }
 
             return true;
         } catch (\Exception $e) {
@@ -757,25 +695,5 @@ class CosAdapter extends AbstractAdapter
         }
 
         return $this->cos->getObjectUrl($this->bucket, $path, date('Y-m-d H:i:s e', $expires), $options);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function assertFolderPresent($dirname)
-    {
-        if ($this->disable_asserts === false && !$this->folderHas($dirname)) {
-            throw new FolderNotFoundException($dirname);
-        }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function assertFolderAbsent($dirname)
-    {
-        if ($this->disable_asserts === false && $this->folderHas($dirname)) {
-            throw new FolderExistsException($dirname);
-        }
     }
 }

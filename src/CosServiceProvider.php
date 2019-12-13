@@ -2,9 +2,6 @@
 
 namespace Hongfs\Cos;
 
-use Hongfs\Cos\Plugin\FolderCopyPlugin;
-use Hongfs\Cos\Plugin\FolderHasPlugin;
-use Hongfs\Cos\Plugin\FolderRenamePlugin;
 use Hongfs\Cos\Plugin\GetTemporaryUrlPlugin;
 use Hongfs\Cos\Plugin\GetUrlPlugin;
 use Illuminate\Support\ServiceProvider;
@@ -21,9 +18,6 @@ class CosServiceProvider extends ServiceProvider
             $filesystem = new Filesystem(new CosAdapter($config), $config);
             $filesystem->addPlugin(new GetUrlPlugin());
             $filesystem->addPlugin(new GetTemporaryUrlPlugin());
-            $filesystem->addPlugin(new FolderHasPlugin());
-            $filesystem->addPlugin(new FolderCopyPlugin());
-            $filesystem->addPlugin(new FolderRenamePlugin());
 
             return $filesystem;
         });
